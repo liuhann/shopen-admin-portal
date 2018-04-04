@@ -9,7 +9,6 @@
   }
 </style>
 
-
 <template>
   <div id="app">
     <div class="main-frame" v-if="frame==='main'">
