@@ -18,7 +18,9 @@ async function login ({email, pwd}, ctx) {
 }
 
 async function register ({name, email, pwd}, ctx) {
-  const packages = await ctx.servers.uc.post(`/open/user/login`)
+  const packages = await ctx.servers.uc.post(`/open/user/register`, {
+    name, email, pwd
+  })
   return packages
 }
 
