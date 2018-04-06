@@ -1,5 +1,4 @@
 import {PageUserLogin} from './pages/page'
-import * as builderModel from './models/user'
 
 const routes = [{
   path: '/login',
@@ -7,6 +6,5 @@ const routes = [{
 }]
 
 export default {
-  routes,
-  models: [builderModel]
+  routes
 }

@@ -9,16 +9,16 @@
  * @param ctx
  * @returns {Promise.<*>}
  */
-async function login({email, pwd}, ctx) {
-  const packages = await ctx.servers.theme.post(`/open/user/login`, {
+async function login ({email, pwd}, ctx) {
+  const packages = await ctx.servers.uc.post(`/open/user/login`, {
     email,
     pwd
   })
   return packages
 }
 
-async function register({name, email, pwd}, ctx) {
-  const packages = await ctx.servers.theme.post(`/open/user/login`)
+async function register ({name, email, pwd}, ctx) {
+  const packages = await ctx.servers.uc.post(`/open/user/login`)
   return packages
 }
 

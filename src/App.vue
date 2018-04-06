@@ -1,12 +1,5 @@
 <style lang="less">
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
+  @import "./style/app";
 </style>
 
 <template>
@@ -16,7 +9,6 @@
       <router-view/>
     </div>
     <div class="main-frame" v-if="frame==='login'">
-      <img src="./assets/logo.png">
       <router-view/>
     </div>
     <div class="main-frame" v-if="frame==='open'">
@@ -27,12 +19,12 @@
 </template>
 
 <script>
-  export default {
-    name: 'App',
-    data() {
-      return {
-        frame: 'main'
-      }
-    },
-  };
+export default {
+  name: 'App',
+  data () {
+    return {
+      frame: 'login'
+    }
+  }
+}
 </script>
