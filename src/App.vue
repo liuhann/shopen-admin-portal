@@ -4,23 +4,19 @@
 
 <template>
   <div id="app">
-    <div class="main-frame" v-if="frame==='main'">
-      <img src="./assets/logo.png">
-      <router-view/>
-    </div>
-    <div class="main-frame" v-if="frame==='login'">
-      <router-view/>
-    </div>
-    <div class="main-frame" v-if="frame==='open'">
-      <img src="./assets/logo.png">
-      <router-view/>
-    </div>
+    <frame-main v-if="frame==='main'"></frame-main>
+    <router-view v-if="frame==='login'"></router-view>
   </div>
 </template>
 
 <script>
+import FrameMain from './frame-main'
+
 export default {
   name: 'App',
+  components: {
+    FrameMain
+  },
   data () {
     return {
       frame: 'login'

@@ -2,7 +2,10 @@ import {PageUserLogin} from './pages/page'
 
 const routes = [{
   path: '/login',
-  component: PageUserLogin
+  component: PageUserLogin,
+  meta: {
+    frame: 'login'
+  }
 }]
 
 export default {
