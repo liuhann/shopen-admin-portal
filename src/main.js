@@ -21,6 +21,9 @@ const boot = new BootStrap({
     },
     product: {
       baseURL: 'http://localhost:3000'
+    },
+    image: {
+      baseURL: 'http://localhost:3000'
     }
   },
   started: function (vm) {
