@@ -47,6 +47,7 @@
     display: flex;
     width: 100%;
     height: calc(100% - 50px);
+    position: relative;
     background: whitesmoke;
   }
 }
