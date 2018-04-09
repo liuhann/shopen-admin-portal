@@ -14,7 +14,7 @@ export default {
       const policy = await imageModel.getOssPolicy('user-text', this.ctx)
       this.action = policy.host
       this.oss_data = {
-        key: `user-test/file.name`,
+        key: policy.key + '.' + this.fileExtension(file.name),
         policy: policy.policy,
         signature: policy.signature,
         OSSAccessKeyId: policy.OSSAccessKeyId,

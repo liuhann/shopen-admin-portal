@@ -28,12 +28,12 @@
         :before-upload="ossBeforeUpload"
         :auto-upload="true"
         :on-success="uploadSuccess"
-        :on-preview="handlePictureCardPreview"
         :on-remove="handleRemove">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处或<em>点击上传</em></div>
         <div class="el-upload__tip" slot="tip">只能上传图片文件，且不超过10M</div>
       </el-upload>
+      <a @click="createImage">createImage</a>
     </div>
   </div>
 </template>
@@ -41,7 +41,7 @@
 <script>
 import {Upload, Button} from 'element-ui'
 import ossMixins from './oss-upload-mixins'
-
+import RESTFullDAO from './rest-dao'
 // crop related
 import Croppa from 'vue-croppa'
 import Vue from 'vue'
@@ -62,7 +62,13 @@ export default {
       }
     }
   },
+
+  created () {
+    this.imagedao = new RESTFullDAO('/api/v1/image', this.ctx.servers.image)
+  },
+
   computed: {
+
   },
 
   methods: {
@@ -72,9 +78,23 @@ export default {
     handleRemove (file, fileList) {
       console.log(file, fileList)
     },
-    handleuploadSuccess (response, file, fileList) {
+
+    uploadSuccess (response, file, fileList) {
+      this.createImage(this.oss_data.key, file.name, file.size)
+    },
+
+    async createImage (key, name, size) {
+      await this.imagedao.create({
+        key,
+        name,
+        size
+      })
+    },
+
+    async listImages (tag, page, size) {
 
     },
+
     handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
