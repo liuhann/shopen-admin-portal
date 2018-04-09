@@ -7,6 +7,11 @@ class RESTfulDAO {
     const result = await this.client.post(`${this.root}`, object)
     return result
   }
+
+  async list (param) {
+    const result = await this.client.get(`${this.root}`, param)
+    return result
+  }
 }
 
 export default RESTfulDAO

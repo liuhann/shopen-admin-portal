@@ -5,6 +5,7 @@
       <div class="tags"></div>
     </div>
     <div class="center-images flex-column">
+      <image-list ref="imagelist" :tag="filteredTag" :name="searchFileName"></image-list>
     </div>
     <div class="right-upload-modify flex-column">
       <!--<div class="croppa-wrapper">
@@ -41,7 +42,9 @@
 <script>
 import {Upload, Button} from 'element-ui'
 import ossMixins from './oss-upload-mixins'
+import ImageList from './image-list'
 import RESTFullDAO from './rest-dao'
+
 // crop related
 import Croppa from 'vue-croppa'
 import Vue from 'vue'
@@ -52,11 +55,14 @@ export default {
   name: 'page-gallery',
   components: {
     'el-upload': Upload,
-    'el-button': Button
+    'el-button': Button,
+    'image-list': ImageList
   },
   mixins: [ossMixins],
   data () {
     return {
+      filteredTag: '',
+      searchFileName: '',
       croppa: {},
       croppaOpts: {
       }
@@ -79,22 +85,19 @@ export default {
       console.log(file, fileList)
     },
 
-    uploadSuccess (response, file, fileList) {
-      this.createImage(this.oss_data.key, file.name, file.size)
+    async uploadSuccess (response, file, fileList) {
+      await this.createImage(this.oss_data.key, file.name, file.size)
+      this.$refs.imagelist.reloadFromStart()
     },
 
     async createImage (key, name, size) {
+      debugger
       await this.imagedao.create({
         key,
         name,
         size
       })
     },
-
-    async listImages (tag, page, size) {
-
-    },
-
     handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
@@ -117,6 +120,7 @@ export default {
   width: 100vw;
   height: 100vh;
   display: flex;
+  background-color: #ffffff;
   .left-filter {
     width: 200px;
   }
