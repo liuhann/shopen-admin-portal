@@ -12,6 +12,16 @@ class RESTfulDAO {
     const result = await this.client.get(`${this.root}`, param)
     return result
   }
+
+  async patch (id, set) {
+    const result = await this.client.patch(`${this.root}/${id}`, set)
+    return result
+  }
+
+  async delete (id) {
+    const result = await this.client.delete(`${this.root}/${id}`)
+    return result
+  }
 }
 
 export default RESTfulDAO

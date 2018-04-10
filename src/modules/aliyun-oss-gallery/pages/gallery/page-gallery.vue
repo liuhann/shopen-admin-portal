@@ -1,11 +1,10 @@
 <template>
   <div class="page-image-gallery">
     <div class="left-filter flex-column">
-      <div class="by-name"></div>
-      <div class="tags"></div>
+      <gallery-filter @tag="filterByTag" @name="filterByName"></gallery-filter>
     </div>
     <div class="center-images flex-column">
-      <image-list ref="imagelist" :tag="filteredTag" :name="searchFileName"></image-list>
+      <image-list ref="imagelist" :tag="filteredTag" :name="filteredName" :tags="tags"></image-list>
     </div>
     <div class="right-upload-modify flex-column">
       <!--<div class="croppa-wrapper">
@@ -40,9 +39,10 @@
 </template>
 
 <script>
-import {Upload, Button} from 'element-ui'
+import {Upload, Button, Tag} from 'element-ui'
 import ossMixins from './oss-upload-mixins'
 import ImageList from './image-list'
+import GalleryFilter from './gallery-filter'
 import RESTFullDAO from './rest-dao'
 
 // crop related
@@ -56,13 +56,16 @@ export default {
   components: {
     'el-upload': Upload,
     'el-button': Button,
-    'image-list': ImageList
+    'el-tag': Tag,
+    'image-list': ImageList,
+    'gallery-filter': GalleryFilter
   },
   mixins: [ossMixins],
   data () {
     return {
+      tags: [],
       filteredTag: '',
-      searchFileName: '',
+      filteredName: '',
       croppa: {},
       croppaOpts: {
       }
@@ -85,23 +88,33 @@ export default {
       console.log(file, fileList)
     },
 
+    filterByTag (tag) {
+      this.filteredTag = tag
+    },
+
+    filterByName (name) {
+      this.filteredName = name
+    },
+
     async uploadSuccess (response, file, fileList) {
       await this.createImage(this.oss_data.key, file.name, file.size)
       this.$refs.imagelist.reloadFromStart()
     },
 
     async createImage (key, name, size) {
-      debugger
       await this.imagedao.create({
         key,
         name,
         size
       })
     },
-    handlePictureCardPreview (file) {
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
+    createTag () {
+
+    },
+    manageTag () {
+
     }
+
   }
 }
 </script>

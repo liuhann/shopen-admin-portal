@@ -24,6 +24,9 @@ const boot = new BootStrap({
     },
     image: {
       baseURL: 'http://localhost:3000'
+    },
+    dictionary: {
+      baseURL: 'http://localhost:3000'
     }
   },
   started: function (vm) {
