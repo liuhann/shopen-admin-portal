@@ -115,7 +115,7 @@ export default {
         param.key = 'name'
         param.value = this.name
       } else if (this.tag) {
-        param.key = 'tag'
+        param.key = 'tags'
         param.value = this.tag
       }
       const response = await this.imagedao.list(param)
