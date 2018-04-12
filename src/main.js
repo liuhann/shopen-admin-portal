@@ -1,11 +1,11 @@
 import BootStrap from 'vue-spa-boot'
 import loginModule from './modules/user-reg-login/module'
-import dashboardModule from './modules/dashboard/module'
+import siteModule from './modules/site/module'
 import galleryModule from './modules/aliyun-oss-gallery/module'
 
 const boot = new BootStrap({
   rootApp: () => import('./App'),
-  modules: [loginModule, dashboardModule, galleryModule],
+  modules: [loginModule, siteModule, galleryModule],
   servers: {
     website: {// 站点 open 服务
       baseURL: 'http://localhost:3000'
@@ -38,7 +38,7 @@ const boot = new BootStrap({
       }
       next()
     })
-    vm.$router.replace('/gallery')
+    vm.$router.replace('/sites')
   }
 })
 

@@ -43,7 +43,7 @@ import {Upload, Button, Tag} from 'element-ui'
 import ossMixins from './oss-upload-mixins'
 import ImageList from './image-list'
 import GalleryFilter from './gallery-filter'
-import RESTFullDAO from './rest-dao'
+import RESTFullDAO from 'rest-dao'
 
 // crop related
 import Croppa from 'vue-croppa'

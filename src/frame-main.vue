@@ -30,13 +30,30 @@
       }
     }
     .user-notify {
-      flex: 1;
       display: flex;
-      .header-notification {
-        flex:1;
-      }
+      font-size: 20px;
+      color: #666;
+      line-height: 35px;
       .avatar {
-        width: 80px;
+        cursor: pointer;
+        margin-left: 20px;
+        background: #ffa300;
+        color: #fff;
+        height: 35px;
+        padding: 2px;
+        font-size: 16px;
+        line-height: 35px;
+        width: 35px;
+        text-align: center;
+        border-radius: 42px;
+        &:hover {
+          background-color: #FF8B08;
+        }
+      }
+
+      .el-badge__content.is-fixed.is-dot {
+        right: 8px;
+        top: 12px
       }
     }
     nav {
@@ -59,19 +76,12 @@
       <div class="logo-info">
         <img class="logo" src="./assets/shopen.svg"><span class="logo-text">SHOPEN</span>
       </div>
-      <nav>
-        <ul>
-          <li><a class="is-active" aria-current="true" href="/workspace/apps"><span class="icon icon icon-user"></span>我的项目</a>
-          </li>
-          <li><a aria-current="false" href="/workspace/teams"><span class="icon icon icon-users"></span>我的团队</a></li>
-          <li><a aria-current="false" href="/workspace/page/forum"><span class="icon icon icon-comment"></span>讨论区</a>
-          </li>
-        </ul>
+      <nav class="menu">
       </nav>
       <div class="user-notify">
-        <div class="header-notification">
-          <i class="fa fa-bell-o"></i>
-        </div>
+        <el-badge is-dot class="item">
+          <i class="el-icon-bell"></i>
+        </el-badge>
         <div class="avatar">
           <div class="default-avatar" v-popover:popover1>刘</div>
         </div>
@@ -92,11 +102,12 @@
 </template>
 
 <script>
-import {Popover} from 'element-ui'
+import {Popover, Badge} from 'element-ui'
 export default {
   name: 'frame-main',
   components: {
-    'el-popover': Popover
+    'el-popover': Popover,
+    'el-badge': Badge
   }
 }
 </script>

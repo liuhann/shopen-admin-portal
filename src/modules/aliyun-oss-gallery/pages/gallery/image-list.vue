@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import RESTFullDAO from './rest-dao'
+import RESTFullDAO from 'rest-dao'
 import DictonaryDAO from './dict-dao'
 
 import {Checkbox, Input, Tag, Select, Button, Option} from 'element-ui'
