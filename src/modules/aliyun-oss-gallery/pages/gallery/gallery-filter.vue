@@ -4,7 +4,15 @@
     <h3 class="group-title">
       <span class="title">按图片名称搜索</span>
     </h3>
+    <div class="name">
+      <el-input
+        placeholder="请输入图片名称"
+        size="mini"
+        v-model="searchFileName">
+      </el-input>
+    </div>
   </div>
+
   <div class="tags">
     <h3 class="group-title">
       <span class="title">标签</span>
@@ -30,13 +38,14 @@
 </template>
 
 <script>
-import {Button} from 'element-ui'
+import {Button, Input} from 'element-ui'
 import DictonaryDAO from './dict-dao'
 
 export default {
   name: 'gallery-filter',
   components: {
-    'el-button': Button
+    'el-button': Button,
+    'el-input': Input
   },
   data () {
     return {
@@ -53,6 +62,7 @@ export default {
   methods: {
     async reloadTags () {
       this.tags = await this.dictdao.list('image-tags')
+      this.$emit('tags', this.tags)
     },
 
     tagChecked (key) {
@@ -81,6 +91,15 @@ export default {
     display: flex;
     .title {
       flex: 1;
+    }
+  }
+  .by-name {
+    .name {
+      padding: 2px 0px;
+      .el-input__inner {
+        border: none;
+        border-bottom: 1px solid #ccc;
+      }
     }
   }
 

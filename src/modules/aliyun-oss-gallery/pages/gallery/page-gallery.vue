@@ -1,7 +1,7 @@
 <template>
   <div class="page-image-gallery">
     <div class="left-filter flex-column">
-      <gallery-filter @tag="filterByTag" @name="filterByName"></gallery-filter>
+      <gallery-filter @tag="filterByTag" @name="filterByName" @tags="reloadAllTags"></gallery-filter>
     </div>
     <div class="center-images flex-column">
       <image-list ref="imagelist" :tag="filteredTag" :name="filteredName" :tags="tags"></image-list>
@@ -92,6 +92,11 @@ export default {
       this.filteredTag = tag
     },
 
+    reloadAllTags (tags) {
+      console.log(tags)
+      this.tags = tags
+    },
+
     filterByName (name) {
       this.filteredName = name
     },
@@ -135,7 +140,7 @@ export default {
   display: flex;
   background-color: #ffffff;
   .left-filter {
-    width: 200px;
+    width: 180px;
   }
   .center-images {
     flex: 1;
@@ -147,7 +152,7 @@ export default {
   .right-upload-modify {
     background-color: #fff;
     padding: 10px;
-    width: 200px;
+    width: 180px;
     .croppa-wrapper {
       padding: 10px;
       background-image: linear-gradient(45deg, #d9d9d9 26%, transparent 25%, transparent 74%, #d9d9d9 74%, #d9d9d9),linear-gradient(45deg, #d9d9d9 25%, transparent 25%, transparent 75%, #d9d9d9 75%, #d9d9d9);

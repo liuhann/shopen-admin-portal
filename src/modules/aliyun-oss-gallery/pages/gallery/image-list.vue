@@ -30,16 +30,16 @@
           placeholder="请设置标签">
           <el-option
             v-for="item in tags"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            :key="item.key"
+            :label="item.key"
+            :value="item.key">
           </el-option>
         </el-select>
       </div>
       <div class="icons">
-        <el-button v-if="!image.editing" size="mini" @click="deleteImage(image)" type="text" icon="el-icon-close">删除</el-button>
         <el-button v-if="!image.editing" size="mini" @click="editImage(image)" type="text" icon="el-icon-edit-outline">编辑</el-button>
-        <el-button v-if="image.editing" size="mini" @click="cancelEditImage(image)" type="text" icon="el-icon-edit-outline">取消</el-button>
+        <el-button v-if="image.editing" size="mini" @click="deleteImage(image)" type="text" icon="el-icon-delete">删除</el-button>
+        <el-button v-if="image.editing" size="mini" @click="cancelEditImage(image)" type="text" icon="el-icon-close">取消</el-button>
         <el-button v-if="image.editing" size="mini" @click="finishEditImage(image)" type="text" icon="el-icon-check">保存</el-button>
       </div>
     </div>
@@ -50,7 +50,7 @@
 import RESTFullDAO from './rest-dao'
 import DictonaryDAO from './dict-dao'
 
-import {Checkbox, Input, Tag, Select, Button} from 'element-ui'
+import {Checkbox, Input, Tag, Select, Button, Option} from 'element-ui'
 
 const IMAGE_HOST = 'https://shopen-test.oss-cn-beijing.aliyuncs.com/'
 
@@ -61,7 +61,8 @@ export default {
     'el-input': Input,
     'el-tag': Tag,
     'el-select': Select,
-    'el-button': Button
+    'el-button': Button,
+    'el-option': Option
   },
   props: {
     tag: {
@@ -167,7 +168,6 @@ export default {
 .image-list-wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   .image-box {
     width: 200px;
     min-height: 200px;
@@ -175,7 +175,8 @@ export default {
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
-    margin-bottom: 20px;
+    margin-bottom: 12px;
+    margin-right: 12px;
     .image-name {
       padding: 0px 5px;
       line-height: 30px;
