@@ -1,9 +1,45 @@
+@width: 828px;
+
 .site-layout {
   width: 100%;
   .header {
     margin: 0 auto;
-    width: 828px;
+    width: @width;
     padding: 14px;
     font-size: 14px;
+  }
+
+  .content {
+    margin: 0 auto;
+    width: @width;
+    font-size: 14px;
+
+    section.form {
+      padding: 10px;
+      background: #fff;
+      label {
+        display: flex;
+        align-items: center;
+        margin: .5em 0;
+        min-height: 34px;
+        span.key {
+          width: 80px;
+          text-align: right;
+          margin-right: 15px;
+        }
+        span.val {
+          flex: 1;
+          margin-left: auto;
+          max-width: calc(100% - 7em);
+          input {
+            padding: 8px;
+            border: 1px solid #f2f2f3;
+            border-radius: 2px;
+            -webkit-highlight: none;
+            width: 280px;
+          }
+        }
+      }
+    }
   }
 }
