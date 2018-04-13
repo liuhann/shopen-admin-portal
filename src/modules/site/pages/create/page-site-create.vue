@@ -37,23 +37,6 @@
           margin-bottom: 5px;
           color: #7f8185;
         }
-
-        .intro {
-          position: absolute;
-          width: 100px;
-          box-sizing: border-box;
-          height: 100px;
-          text-align: left;
-          padding: 10px;
-          background: #fff;
-          opacity: 0;
-          transition: opacity .2s linear;
-        }
-        &:hover {
-          .intro {
-            opacity: 1;
-          }
-        }
       }
     }
   }
@@ -87,7 +70,6 @@
           <div class="package" v-for="module in packages" :key="module.name" @click="togglePackage(module)" :class="module.selected?'checked': ''">
             <i :class="module.icon"></i>
             <div class="name">{{module.name}}</div>
-            <div class="intro">{{module.intro}}</div>
           </div>
         </span>
       </label>
@@ -128,7 +110,6 @@ export default {
         selected: false,
         id: 'store',
         name: '商店',
-        intro: '提供商品创建、展示及销售等功能',
         icon: 'el-icon-goods'
       }, {
         selected: false,
