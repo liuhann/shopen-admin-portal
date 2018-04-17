@@ -45,13 +45,17 @@ export default {
     },
     cover: {
       type: String
-    }
+    },
+    checkedColor: {
+      type: String,
+      default: '#ff8401'
+    },
   },
   data () {
     return {
       check: {
         transform: 'scale(1.1)',
-        border: '1px solid #ff8401'
+        border: '1px solid ' + this.checkedColor
       },
       background: {
         backgroundImage: 'url("' + this.cover + '")',

@@ -2,12 +2,13 @@ import BootStrap from 'vue-spa-boot'
 import loginModule from './modules/user-reg-login/module'
 import siteModule from './modules/site/module'
 import galleryModule from './modules/aliyun-oss-gallery/module'
+import builderModule from './modules/page-builder/module'
 
 const boot = new BootStrap({
   rootApp: () => import('./App'),
-  modules: [loginModule, siteModule, galleryModule],
+  modules: [loginModule, siteModule, galleryModule, builderModule],
   servers: {
-    website: {// 站点 open 服务
+    shopen: {// 核心服务
       baseURL: 'http://localhost:3000'
     },
     theme: {// 主题模板静态站

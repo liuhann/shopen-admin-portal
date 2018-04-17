@@ -13,13 +13,15 @@
           cursor: pointer;
         }
         &.selected {
-          border: 1px solid red;
+          border: 1px solid rgb(255, 132, 1);
         }
       }
     }
     .packages {
-      display: flex;
-      flex-wrap: wrap;
+      .multi-check {
+        display: flex;
+        flex-wrap: wrap;
+      }
       .package {
         display: flex;
         text-align: center;
@@ -37,22 +39,8 @@
           margin-bottom: 5px;
           color: #7f8185;
         }
-
-        .intro {
-          position: absolute;
-          width: 100px;
-          box-sizing: border-box;
-          height: 100px;
-          text-align: left;
-          padding: 10px;
-          background: #fff;
-          opacity: 0;
-          transition: opacity .2s linear;
-        }
-        &:hover {
-          .intro {
-            opacity: 1;
-          }
+        &.selected {
+          border: 1px solid rgb(255, 132, 1);
         }
       }
     }
@@ -64,7 +52,7 @@
   <div class="header">
     <div class="header-actions">
       <el-button type="text" size="medium" icon="el-icon-back" @click="returnList">返回列表</el-button>
-      <el-button type="text" size="medium" icon="el-icon-check" @click="returnList">保存</el-button>
+      <el-button type="text" size="medium" icon="el-icon-check" @click="saveSite">保存</el-button>
     </div>
   </div>
   <div class="content">
@@ -84,11 +72,12 @@
       <label>
         <span class="key">功能模块</span>
         <span class="val packages">
-          <div class="package" v-for="module in packages" :key="module.name" @click="togglePackage(module)" :class="module.selected?'checked': ''">
-            <i :class="module.icon"></i>
-            <div class="name">{{module.name}}</div>
-            <div class="intro">{{module.intro}}</div>
-          </div>
+          <multi-check v-model="site.packages" :items="packages" :item-key="'id'" :item-class="'package'">
+            <template slot-scope="{ item }">
+              <i :class="item.icon"></i>
+              <div class="name">{{item.name}}</div>
+            </template>
+          </multi-check>
         </span>
       </label>
     </section>
@@ -98,13 +87,16 @@
 
 <script>
 import {Button} from 'element-ui'
+import RESTFullDAO from 'rest-dao'
 import MobileShellNova from './mobile-shell-nova'
+import {MultiCheck} from '../../imports'
 
 export default {
   name: 'page-site-create',
   components: {
     MobileShellNova,
     'el-button': Button,
+    'multi-check': MultiCheck,
     'mobile-shell-nova': MobileShellNova
   },
   // http://localhost:3000/themes/bonfire/previews/cover.png
@@ -125,32 +117,36 @@ export default {
         id: 'bonfire'
       }],
       packages: [{
-        selected: false,
         id: 'store',
         name: '商店',
-        intro: '提供商品创建、展示及销售等功能',
         icon: 'el-icon-goods'
       }, {
-        selected: false,
-        id: 'story',
+        id: 'lucky-draw',
+        name: '抽奖',
+        icon: 'el-icon-picture'
+      }, {
+        id: 'child-story',
         name: '故事',
-        intro: '儿童故事',
         icon: 'el-icon-service'
       }, {
-        selected: false,
+        id: 'video',
         name: '视频',
         icon: 'el-icon-picture'
       }, {
-        selected: false,
+        id: '',
         name: '微信公号',
         icon: 'el-icon-view'
       }, {
-        selected: false,
         id: 'activity',
         name: '活动',
         icon: 'el-icon-date'
       }]
     }
+  },
+
+  created () {
+    this.sitedao = new RESTFullDAO(`/api/v1/site`, this.ctx.servers.shopen)
+    this.pagedao = new RESTFullDAO(`/api/v1/page`, this.ctx.servers.shopen)
   },
 
   methods: {
@@ -167,6 +163,16 @@ export default {
     },
 
     returnList () {
+      this.$router.replace('/sites')
+    },
+
+    async saveSite () {
+      const response = await this.sitedao.create(this.site)
+      await this.pagedao.create({
+        path: '/',
+        name: '首页',
+        _site_id: response.object._id
+      })
       this.$router.replace('/sites')
     }
   }
