@@ -99,7 +99,7 @@
 <script>
 import {Popover, Badge} from 'element-ui'
 export default {
-  name: 'frame-main',
+  name: 'overview-main',
   components: {
     'el-popover': Popover,
     'el-badge': Badge
