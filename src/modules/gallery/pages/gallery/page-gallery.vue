@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import {Upload, Button, Tag} from 'element-ui'
+import {Upload} from 'element-ui'
 import ossMixins from './oss-upload-mixins'
 import ImageList from './image-list'
 import GalleryFilter from './gallery-filter'
@@ -55,8 +55,6 @@ export default {
   name: 'page-gallery',
   components: {
     'el-upload': Upload,
-    'el-button': Button,
-    'el-tag': Tag,
     'image-list': ImageList,
     'gallery-filter': GalleryFilter
   },

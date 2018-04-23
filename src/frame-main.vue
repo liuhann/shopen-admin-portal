@@ -56,9 +56,6 @@
         top: 12px
       }
     }
-    nav {
-      flex: 2;
-    }
   }
   .main-content {
     display: flex;
@@ -76,8 +73,6 @@
       <div class="logo-info">
         <img class="logo" src="./assets/shopen.svg"><span class="logo-text">SHOPEN</span>
       </div>
-      <nav class="menu">
-      </nav>
       <div class="user-notify">
         <el-badge is-dot class="item">
           <i class="el-icon-bell"></i>

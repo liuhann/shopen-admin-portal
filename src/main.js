@@ -1,10 +1,10 @@
-import BootStrap from 'vue-spa-boot'
-import loginModule from './modules/user-reg-login/module'
+import AsyncBoot from 'async-boot'
+import loginModule from './modules/login/module'
 import siteModule from './modules/site/module'
-import galleryModule from './modules/aliyun-oss-gallery/module'
-import builderModule from './modules/page-builder/module'
+import galleryModule from './modules/gallery/module'
+import builderModule from './modules/builder/module'
 
-const boot = new BootStrap({
+const boot = new AsyncBoot({
   rootApp: () => import('./App'),
   modules: [loginModule, siteModule, galleryModule, builderModule],
   servers: {
@@ -30,7 +30,11 @@ const boot = new BootStrap({
       baseURL: 'http://localhost:3000'
     }
   },
-  started: function (vm) {
+  bootCompleted: [async (ctx, next) => {
+    await import('./common/element-ui-dependency')
+    await next()
+  }],
+  started: async function (vm) {
     vm.$router.beforeEach((to, from, next) => {
       if (to.meta && to.meta.frame) {
         vm.frame = to.meta.frame

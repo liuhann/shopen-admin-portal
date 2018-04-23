@@ -50,19 +50,11 @@
 import RESTFullDAO from 'rest-dao'
 import DictonaryDAO from './dict-dao'
 
-import {Checkbox, Input, Tag, Select, Button, Option} from 'element-ui'
-
 const IMAGE_HOST = 'https://shopen-test.oss-cn-beijing.aliyuncs.com/'
 
 export default {
   name: 'image-list',
   components: {
-    'el-checkbox': Checkbox,
-    'el-input': Input,
-    'el-tag': Tag,
-    'el-select': Select,
-    'el-button': Button,
-    'el-option': Option
   },
   props: {
     tag: {

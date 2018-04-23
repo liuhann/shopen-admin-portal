@@ -1,24 +1,34 @@
 <template>
 <div class="site-frames">
-  <div class="navs">
-    <div class="pages">
-      <h3 class="title">站点页面</h3>
-      <ul>
+  <div class="left-nav">
+    <menu-group :config="navPageConfig">
+      <template slot="title-append">
+        <el-button size="mini" @click="createPage" type="text" >创建</el-button>
+      </template>
+    </menu-group>
+  </div>
+  <div class="center-content">
 
-      </ul>
-      <h3 class="title">模块页面</h3>
-    </div>
   </div>
 </div>
 </template>
 
 <script>
 import RESTfulDAO from 'rest-dao'
+import {Button} from 'element-ui'
+import {MenuGroup} from '../../imports'
 export default {
   name: 'site-frame',
+  components: {
+    'menu-group': MenuGroup,
+    'el-button': Button
+  },
   data() {
     return {
-      pages: []
+      pages: [],
+      navPageConfig: {
+        title: '页面'
+      }
     }
   },
   created() {
@@ -29,13 +39,28 @@ export default {
   methods: {
     async getSitePages() {
       this.pagedao.list({
-        _site_id: this.$route.params.id
+        _site_id: this.$route.params.site
       })
+    },
+    createPage() {
+      this.$router.push(`/page/edit/${this.$route.params.site}/`)
     }
   }
 }
 </script>
 
 <style lang="less">
+
+.site-frames {
+  display: flex;
+  width: 100%;
+  .left-nav {
+    width:180px;
+    background-color: #fff;
+  }
+  .center-content {
+    flex: 1;
+  }
+}
 
 </style>

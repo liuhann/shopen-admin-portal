@@ -68,7 +68,7 @@ export default {
       this.sites = (await this.sitedao.list()).list
     },
     enterSite (site) {
-      this.$router.replace(`/site/frame/${site._id}`)
+      this.$router.push(`/site/show/${site._id}`)
     }
   }
 }

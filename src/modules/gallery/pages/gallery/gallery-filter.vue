@@ -38,14 +38,11 @@
 </template>
 
 <script>
-import {Button, Input} from 'element-ui'
 import DictonaryDAO from './dict-dao'
 
 export default {
   name: 'gallery-filter',
   components: {
-    'el-button': Button,
-    'el-input': Input
   },
   data () {
     return {
