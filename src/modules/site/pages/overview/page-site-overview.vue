@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="opers">
-        <el-button type="text" @click="buildPage" size="mini">编辑</el-button>
+        <el-button type="text" @click="openPageBuilder(page._id)" size="mini">编辑</el-button>
         <el-button type="text" size="mini">统计</el-button>
         <el-button type="text" size="mini">删除</el-button>
       </div>
@@ -58,8 +58,8 @@ export default {
       this.freePages = frees.list
     },
 
-    buildPage(pageId) {
-      this.$router.push(`/page/build/${pageId}`)
+    openPageBuilder(pageId) {
+      this.$router.push(`/page/builder/${pageId}`)
     },
 
     createPage() {

@@ -2,7 +2,7 @@ import {SiteBuilder} from './pages/page'
 import * as builderModel from './models/builder'
 
 const routes = [{
-  path: '/site/builder',
+  path: '/page/builder/:id',
   component: SiteBuilder
 }]
 

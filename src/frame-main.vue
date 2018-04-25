@@ -58,6 +58,7 @@
     }
   }
   .main-content {
+    box-shadow: 0 2px 30px 0 rgba(214, 214, 214, 0.5);
     display: flex;
     width: 100%;
     height: calc(100% - 50px);
