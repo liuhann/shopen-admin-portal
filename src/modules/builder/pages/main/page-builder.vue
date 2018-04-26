@@ -37,29 +37,31 @@
     top: 0px;
     left: 0px;
     bottom: 0px;
+    background-color: #fff;
+    transition: transform .3s ease-in-out;
     @media (min-width: 850px) {
-      width: 420px;
-      transform: translateX(-420px);
+      width: 360px;
+      transform: translateX(-360px);
       &.open {
         transform: translateX(0);
       }
     }
     @media (max-width: 850px) {
       width: 90%;
-      transform: translateX(-90%);
+      transform: translateX(-100%);
       &.open {
         transform: translateX(0);
       }
     }
 
-    .section-template {
-      width: 50%;
-      height: 160px;
-      .image-wrapper {
-        img {
-          width: 100%;
-          max-height: 81px;
-        }
+    .section-entry {
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      display: flex;
+      padding: 10px;
+      .name {
+        line-height: 30px;
+        flex: 1;
       }
     }
   }
@@ -78,25 +80,24 @@
     <div class="btn-add" @click="onAddSectionClick">增加页面元素</div>
   </div>
 
-  <div class="section-list" :class="isAddingSection? 'open': ''">
-    <div class="section-template" v-for="(section, key) in sections" :key="key">
-      <div class="image-wrapper">
-        <img :src="imageBaseUrl + '/themes/' + theme + '/previews/' + section.preview">
-      </div>
+  <div class="section-list" :class="showSectionTemplateList? 'open': ''">
+    <div class="section-entry" v-for="(section, key) in sections" :key="key">
       <span class="name">{{section.title}}</span>
+      <el-button class="btn-add" type="primary" size="mini" @click="addSection(section)">添加</el-button>
     </div>
   </div>
-
 </div>
 </template>
 <script>
 import Vue from 'vue'
 import builder from '../../models/builder'
 import ScreenPreview from './components/screen-preview'
+import ElButton from "element-ui/packages/button/src/button";
 
 export default {
   name: 'page-builder',
   components: {
+    ElButton,
     'screen-preview': ScreenPreview,
   },
   created() {
@@ -106,7 +107,8 @@ export default {
     return {
       imageBaseUrl: this.ctx.servers.theme.options.baseURL,
       theme: 'bonfire',
-      isAddingSection: false,
+      showSectionTemplateList: false,
+      showEditSection: false,
       sections: [],
       themeStyles: [],
     }
@@ -115,7 +117,7 @@ export default {
   },
   methods: {
     async onAddSectionClick() {
-      this.isAddingSection = true
+      this.showSectionTemplateList = true
     },
     async loadThemeSections(theme) {
       const themePackage = await builder.getThemeSections({theme}, this.ctx)
@@ -140,6 +142,10 @@ export default {
         sections: this.$refs.viewScreen.sections,
       }, this.ctx)
     },
+    async addSection(section) {
+      this.showSectionTemplateList = false
+      this.showEditSection = true
+    }
   },
 }
 </script>
