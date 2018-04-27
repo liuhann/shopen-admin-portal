@@ -64,6 +64,8 @@
     height: calc(100% - 50px);
     position: relative;
     background: whitesmoke;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 }
 </style>
