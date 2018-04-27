@@ -18,14 +18,13 @@ export default {
     'view-section': ViewSection
   },
   props: {
-    loadedSections: {
+    sections: {
       type: Array
     }
   },
   data() {
     return {
-      sections: [
-      ],
+
     }
   },
   methods: {

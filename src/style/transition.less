@@ -1,0 +1,17 @@
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.slide-left-enter-active {
+  transition: transform .3s ease;
+}
+.slide-left-leave-active {
+  transition: transform .3s ease;
+}
+.slide-left-enter, .slide-left-leave-to
+  /* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(-100%);
+}
+
+.slide-left-enter-to, .slide-fade-leave
+  /* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(0);
+}

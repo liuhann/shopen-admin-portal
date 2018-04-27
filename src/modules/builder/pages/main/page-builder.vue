@@ -32,28 +32,18 @@
     }
   }
 
-  .section-list {
+  .section-list, .edit-section {
     position: absolute;
     top: 0px;
     left: 0px;
     bottom: 0px;
     background-color: #fff;
-    transition: transform .3s ease-in-out;
     @media (min-width: 850px) {
       width: 360px;
-      transform: translateX(-360px);
-      &.open {
-        transform: translateX(0);
-      }
     }
     @media (max-width: 850px) {
       width: 90%;
-      transform: translateX(-100%);
-      &.open {
-        transform: translateX(0);
-      }
     }
-
     .section-entry {
       border-bottom: 1px solid #eee;
       cursor: pointer;
@@ -76,28 +66,35 @@
 
   <div class="screen-viewport">
     <link v-for="style in themeStyles" :key="style" :href="imageBaseUrl + '/themes/' + theme + '/styles/' + style" rel="stylesheet">
-    <screen-preview ref="viewScreen"></screen-preview>
+    <screen-preview ref="viewScreen" :sections="pageSections"></screen-preview>
     <div class="btn-add" @click="onAddSectionClick">增加页面元素</div>
   </div>
 
-  <div class="section-list" :class="showSectionTemplateList? 'open': ''">
-    <div class="section-entry" v-for="(section, key) in sections" :key="key">
-      <span class="name">{{section.title}}</span>
-      <el-button class="btn-add" type="primary" size="mini" @click="addSection(section)">添加</el-button>
+  <transition name="slide-left">
+    <div class="section-list" v-if="showSectionTemplateList">
+      <div class="section-entry" v-for="(section, key) in sectionTemplates" :key="key">
+        <span class="name">{{section.title}}</span>
+        <el-button type="primary" size="mini" @click="addSection(section)">添加</el-button>
+      </div>
     </div>
-  </div>
+  </transition>
+  <transition name="slide-left">
+    <edit-section :section="currentSection" v-if="showEditSection" @close="closeEdit" @remove="removeCurrentSection"></edit-section>
+  </transition>
 </div>
 </template>
 <script>
 import Vue from 'vue'
 import builder from '../../models/builder'
 import ScreenPreview from './components/screen-preview'
-import ElButton from "element-ui/packages/button/src/button";
+import ElButton from 'element-ui/packages/button/src/button'
+import EditSection from './components/edit-section'
 
 export default {
   name: 'page-builder',
   components: {
     ElButton,
+    'edit-section': EditSection,
     'screen-preview': ScreenPreview,
   },
   created() {
@@ -107,9 +104,15 @@ export default {
     return {
       imageBaseUrl: this.ctx.servers.theme.options.baseURL,
       theme: 'bonfire',
+      // add section side bar
       showSectionTemplateList: false,
+      // edit section side bar
       showEditSection: false,
-      sections: [],
+      currentSection: {},
+      // section templates in theme
+      sectionTemplates: [],
+      // the sections current page using
+      pageSections: [],
       themeStyles: [],
     }
   },
@@ -131,7 +134,7 @@ export default {
           },
           template: section.tmpl
         })
-        this.sections.push(section)
+        this.sectionTemplates.push(section)
       }
       this.themeStyles = themePackage.styles
     },
@@ -142,9 +145,30 @@ export default {
         sections: this.$refs.viewScreen.sections,
       }, this.ctx)
     },
-    async addSection(section) {
+    async addSection(sectionTemplate) {
       this.showSectionTemplateList = false
+      const section = this.cloneObject(sectionTemplate)
+      delete section.tmpl
+      this.pageSections.push(section)
+      this.currentSection = section
       this.showEditSection = true
+    },
+
+    cloneObject(object) {
+      return JSON.parse(JSON.stringify(object))
+    },
+
+    closeEdit() {
+      this.showEditSection = false
+    },
+    removeCurrentSection() {
+      this.showEditSection = false
+      for (let i = 0; i < this.pageSections.length; i++) {
+        if (this.pageSections[i] === this.currentSection) {
+          this.pageSections.splice(i, 1)
+          break
+        }
+      }
     }
   },
 }
