@@ -6,7 +6,7 @@
     </div>
     <div class="config">
       <div class="field" v-for="(item, key) in section.data" :key="key">
-        <label>{{key}}</label>
+        <label>{{item.desc || key}}</label>
         <div class="text inline" v-if="item.type==='text'">
           <input type="text" v-model="item.value">
         </div>
@@ -81,43 +81,32 @@ export default {
     bottom: 46px;
     overflow-y: auto;
     .field {
-      border-bottom: 1px solid #eee;
       padding: 5px 10px;
+      margin-bottom: 10px;
       line-height: 36px;
-      display: flex;
-      flex-wrap: wrap;
       label {
-        flex:1;
-      }
-      >div.inline {
-        flex: 4;
-      }
-      >div.block {
-        width: 100%;
+        color: #626361;
+        margin-bottom: 10px;
       }
       .text {
         input {
-          background-color: #fff;
-          -webkit-appearance: none;
-          padding: 8px;
-          border: 1px solid #dbdbdb;
+          padding: 10px;
+          border: 1px solid #E5E8EC;
           box-sizing: border-box;
-          color: #363636;
+          color: #4D4E4C;
+          background-color: #F7F8F9;
           border-radius: 4px;
-          box-shadow: inset 0 1px 2px rgba(10,10,10,.1);
           width: 100%;
         }
       }
       .textarea {
         textarea {
-          background-color: #fff;
-          -webkit-appearance: none;
-          padding: 8px;
-          border: 1px solid #dbdbdb;
           box-sizing: border-box;
-          color: #363636;
+          padding: 10px;
+          border: 1px solid #E5E8EC;
+          color: #4D4E4C;
+          background-color: #F7F8F9;
           border-radius: 4px;
-          box-shadow: inset 0 1px 2px rgba(10,10,10,.1);
           width: 100%;
         }
       }
