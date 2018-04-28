@@ -28,13 +28,15 @@
     margin: 0 auto;
     border: 1px solid #eee;
     position: relative;
+    height: calc(100% - 20px);
+    max-height: 650px;
+    overflow-x: hidden;
+    overflow-y: auto;
     @media (min-width: 850px) {
       width: 375px;
-      min-height: 720px;
     }
     @media (max-width: 850px) {
       width: 100%;
-      min-height: 720px;
     }
   }
 
@@ -45,6 +47,7 @@
     bottom: 0px;
     background-color: #fff;
     z-index: 101;
+    border-right: 1px solid #eee;
     @media (min-width: 850px) {
       width: 360px;
     }
@@ -73,7 +76,7 @@
   <el-button class="btn-add" type="primary" icon="el-icon-plus" circle @click="onAddSectionClick"></el-button>
   <div class="screen-viewport">
     <link v-for="style in themeStyles" :key="style" :href="imageBaseUrl + '/themes/' + theme + '/styles/' + style" rel="stylesheet">
-    <screen-preview ref="viewScreen" :sections="pageSections" @upper-section="moveUp" @edit-section="editSection"></screen-preview>
+    <screen-preview :ref="'screenPreview'" @edit-section="editSection"></screen-preview>
   </div>
 
   <transition name="slide-left">
@@ -117,8 +120,6 @@ export default {
       currentSection: {},
       // section templates in theme
       sectionTemplates: [],
-      // the sections current page using
-      pageSections: [],
       themeStyles: [],
       // section seq
       seq: 1,
@@ -150,36 +151,24 @@ export default {
       await builder.savePage({
         page: 'test',
         type: 'index',
-        sections: this.$refs.viewScreen.sections,
+        sections: this.$refs.screenPreview.sections,
       }, this.ctx)
     },
+
     async addSection(sectionTemplate) {
       this.showSectionTemplateList = false
       const section = this.cloneObject(sectionTemplate)
-      section.hover = false
-      section.id = this.seq++
-      delete section.tmpl
-      this.pageSections.push(section)
+      this.$refs['screenPreview'].addSection(section)
       this.currentSection = section
       this.showEditSection = true
     },
 
-    moveUp(section) {
-      if (this.pageSections[0] === section) {
-        return
-      }
-      for (let i = 0; i < this.pageSections.length; i++) {
-        if (this.pageSections[i] === section) {
-          const upper = this.pageSections[i - 1]
-          this.$set(this.pageSections, i - 1, section)
-          this.$set(this.pageSections, i, upper)
-          break
-        }
-      }
+    async removeCurrentSection() {
+      this.showEditSection = false
+      this.$refs['screenPreview'].removeSection(this.currentSection)
+      this.currentSection = null
     },
-    moveDown(section) {
 
-    },
     editSection(section) {
       this.currentSection = section
       this.showEditSection = true
@@ -192,15 +181,6 @@ export default {
     closeEdit() {
       this.showEditSection = false
     },
-    removeCurrentSection() {
-      this.showEditSection = false
-      for (let i = 0; i < this.pageSections.length; i++) {
-        if (this.pageSections[i] === this.currentSection) {
-          this.pageSections.splice(i, 1)
-          break
-        }
-      }
-    }
   },
 }
 </script>
