@@ -49,10 +49,10 @@
     z-index: 101;
     border-right: 1px solid #eee;
     @media (min-width: 850px) {
-      width: 360px;
+      width: 400px;
     }
     @media (max-width: 850px) {
-      width: 90%;
+      width: 100%;
     }
     .section-entry {
       border-bottom: 1px solid #eee;

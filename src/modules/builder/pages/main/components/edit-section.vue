@@ -2,7 +2,7 @@
   <div class="edit-section">
     <div class="header">
       <div class="title">配置 {{section.title}}</div>
-      <el-button class="btn-close" type="text" icon="el-icon-error" @click="close"></el-button>
+      <el-button class="btn-close" type="text" icon="el-icon-close" @click="close"></el-button>
     </div>
     <div class="config">
       <div class="field" v-for="(item, key) in section.data" :key="key">
@@ -14,16 +14,15 @@
           <textarea v-model="item.value" rows="4"></textarea>
         </div>
         <div class="edit-image block" v-if="item.type === 'image'">
-          <div class="image-box" :style="{
-            backgroundImage: 'url(' + item.value + ')'
-          }">
-            <el-button type="success" size="small">更换</el-button>
-          </div>
+            <div class="image-box" :style="{
+              backgroundImage: 'url(' + item.value + ')'
+            }"></div>
+            <el-button type="text" icon="el-icon-refresh" @click="replaceImage">更换</el-button>
         </div>
       </div>
-    </div>
-    <div class="footer">
-      <el-button icon="el-icon-delete" circle type="danger" @click="remove"></el-button>
+      <div class="footer">
+        <el-button icon="el-icon-delete" type="text" @click="remove">删除</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -46,6 +45,9 @@ export default {
       this.$emit('close')
     },
 
+    replaceImage() {
+    },
+
     remove() {
       this.$emit('remove')
     }
@@ -65,6 +67,7 @@ export default {
     justify-content: space-around;
     .title {
       flex: 1;
+      text-align: center;
     }
     .btn-close {
       font-size: 20px;
@@ -78,14 +81,13 @@ export default {
     top: 38px;
     left: 0;
     right: 0;
-    bottom: 46px;
+    bottom: 0px;
+    padding: 20px;
     overflow-y: auto;
     .field {
-      padding: 5px 10px;
-      margin-bottom: 10px;
       line-height: 36px;
       label {
-        color: #626361;
+        color: #989898;
         margin-bottom: 10px;
       }
       .text {
@@ -111,34 +113,19 @@ export default {
         }
       }
       .edit-image {
+        padding: 10px;
+        border: 1px solid #E5E8EC;
+        border-radius: 4px;
+        display: flex;
         .image-box {
-          background: #fefefe;
+          width: 80px;
+          height: 80px;
           background-position: center;
           background-size: cover;
-          box-sizing: content-box;
-          width: auto;
-          margin: 5px;
           border: 1px solid #efefef;
-          height: 260px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
         }
       }
     }
-  }
-  .footer {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 46px;
-    border-top: 1px solid #eee;
-    line-height: 46px;
-    overflow-y: auto;
   }
 }
 </style>
